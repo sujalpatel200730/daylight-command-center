@@ -1,0 +1,14 @@
+{
+  "name": "Daylight Personal Command Center",
+  "short_name": "Daylight",
+  "description": "Tasks, dates, study focus, notes, news and quick tools in one dashboard.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fb",
+  "theme_color": "#f5f7fb",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

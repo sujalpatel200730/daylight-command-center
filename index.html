@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f8fc">
+  <meta name="description" content="A minimal personal command center for tasks, study, dates, notes and news.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <title>Daylight — Command Center</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">✦</span><div><b>daylight</b><small>PERSONAL COMMAND CENTER</small></div></div>
+    <div class="top-actions"><span id="today-label"></span><button id="theme-btn" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">◐</button></div>
+  </header>
+
+  <main class="dashboard">
+    <section class="welcome">
+      <div><p class="eyebrow">YOUR DAY, IN ONE PLACE</p><h1 id="greeting">Good evening.</h1><p class="subtle">A calmer way to keep track of what matters.</p></div>
+      <div class="clock-panel"><div id="clock" class="clock">--:--</div><div id="clock-date" class="clock-date">Loading date…</div></div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card"><span class="stat-icon blue">✓</span><div><strong id="task-count">0</strong><span>Open tasks</span></div></article>
+      <article class="stat-card"><span class="stat-icon violet">◷</span><div><strong id="event-count">0</strong><span>Upcoming dates</span></div></article>
+      <article class="stat-card"><span class="stat-icon amber">▤</span><div><strong id="note-count">0</strong><span>Saved notes</span></div></article>
+    </section>
+
+    <section class="widget-grid">
+      <article class="widget tasks-widget">
+        <div class="widget-head"><div><p class="eyebrow">FOCUS</p><h2>Tasks for today</h2></div><button class="text-btn" id="clear-done">Clear completed</button></div>
+        <form id="task-form" class="inline-form"><input id="task-input" placeholder="What needs doing?" maxlength="140" required><select id="task-priority" aria-label="Priority"><option value="Normal">Normal</option><option value="High">High priority</option></select><button class="primary-btn" type="submit">Add</button></form>
+        <div class="filter-row"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="open">Open</button><button class="filter" data-filter="done">Completed</button></div>
+        <ul id="task-list" class="task-list"></ul>
+        <p id="task-empty" class="empty-state">No tasks yet. Add one small next step.</p>
+      </article>
+
+      <article class="widget dates-widget">
+        <div class="widget-head"><div><p class="eyebrow">LOOK AHEAD</p><h2>Important dates</h2></div><span class="pill">Calendar</span></div>
+        <form id="event-form" class="event-form"><input id="event-title" placeholder="Exam, event, deadline…" maxlength="100" required><div class="form-row"><input id="event-date" type="date" required><input id="event-time" type="time" aria-label="Time"></div><button class="primary-btn full" type="submit">Add important date</button></form>
+        <div id="event-list" class="event-list"></div>
+        <p id="event-empty" class="empty-state">Add exams, birthdays, deadlines, and events.</p>
+      </article>
+
+      <article class="widget study-widget">
+        <div class="widget-head"><div><p class="eyebrow">ENGINEERING MODE</p><h2>Study planner</h2></div><span class="pill blue-pill">Study</span></div>
+        <label class="field-label" for="study-subject">Subject / topic</label><input id="study-subject" placeholder="e.g. Data Structures">
+        <div class="form-row"><div class="grow"><label class="field-label" for="study-minutes">Focus session (minutes)</label><input id="study-minutes" type="number" min="5" max="180" value="25"></div><div class="grow"><label class="field-label" for="study-goal">Today's goal</label><input id="study-goal" placeholder="e.g. 2 problems"></div></div>
+        <div class="timer-row"><div><strong id="timer-display">25:00</strong><span id="timer-status">Ready when you are</span></div><button id="timer-start" class="primary-btn">Start focus</button><button id="timer-reset" class="secondary-btn">Reset</button></div>
+        <div class="progress-track"><div id="study-progress"></div></div>
+        <p class="helper" id="study-saved">Your study setup is saved on this device.</p>
+      </article>
+
+      <article class="widget notes-widget">
+        <div class="widget-head"><div><p class="eyebrow">QUICK CAPTURE</p><h2>Notes</h2></div><span class="pill">Auto-saved</span></div>
+        <input id="note-title" placeholder="Note title (optional)" maxlength="100">
+        <textarea id="note-body" rows="5" placeholder="Ideas, reminders, things to look up…"></textarea>
+        <div class="note-actions"><span id="note-status" class="helper">Saved on this device</span><button id="new-note" class="secondary-btn">New note</button><button id="save-note" class="primary-btn">Save note</button></div>
+        <div id="saved-notes" class="saved-notes"></div>
+      </article>
+
+      <article class="widget news-widget">
+        <div class="widget-head"><div><p class="eyebrow">STAY CONNECTED</p><h2>World & technology</h2></div><button id="news-refresh" class="text-btn">Refresh links ↗</button></div>
+        <p class="helper">Open trusted sources for current headlines. News links open in a new tab; this starter version does not scrape or store article content.</p>
+        <div class="news-tabs"><button class="news-tab active" data-news="tech">Technology</button><button class="news-tab" data-news="world">World</button><button class="news-tab" data-news="science">Science</button></div>
+        <div id="news-list" class="news-list"></div>
+      </article>
+
+      <article class="widget tools-widget">
+        <div class="widget-head"><div><p class="eyebrow">HANDY SHORTCUTS</p><h2>Quick tools</h2></div><span class="pill">Everyday</span></div>
+        <div class="tools-grid">
+          <button class="tool-tile" data-tool="calculator"><span>＋</span><b>Calculator</b><small>Quick calculations</small></button>
+          <button class="tool-tile" data-tool="checklist"><span>☷</span><b>Mini checklist</b><small>Small things to do</small></button>
+          <button class="tool-tile" data-tool="links"><span>↗</span><b>Useful links</b><small>Study & developer tools</small></button>
+          <button class="tool-tile" data-tool="export"><span>⇩</span><b>Backup data</b><small>Download your data</small></button>
+        </div>
+        <div id="tool-output" class="tool-output" hidden></div>
+      </article>
+
+      <article class="widget customize-widget">
+        <div class="widget-head"><div><p class="eyebrow">MAKE IT YOURS</p><h2>Dashboard settings</h2></div></div>
+        <label class="toggle-row"><span><b>Show study planner</b><small>Keep your focus timer on the dashboard</small></span><input type="checkbox" id="show-study" checked></label>
+        <label class="toggle-row"><span><b>Show news widget</b><small>Keep world and tech sources visible</small></span><input type="checkbox" id="show-news" checked></label>
+        <label class="toggle-row"><span><b>Show quick tools</b><small>Keep useful shortcuts visible</small></span><input type="checkbox" id="show-tools" checked></label>
+        <p class="helper">Tasks, dates and notes are stored locally in this browser. Use Backup data before changing devices or clearing browser data.</p>
+      </article>
+    </section>
+    <footer><span>daylight · your personal space</span><span>Private by default · stored on this device</span></footer>
+  </main>
+
+  <dialog id="modal"><div class="modal-head"><h2 id="modal-title">Quick tool</h2><button id="modal-close" class="icon-btn" aria-label="Close">✕</button></div><div id="modal-content"></div></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
